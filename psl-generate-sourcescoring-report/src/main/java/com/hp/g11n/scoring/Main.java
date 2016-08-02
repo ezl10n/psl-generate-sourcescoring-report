@@ -38,7 +38,7 @@ public class Main extends Application {
 
 		primaryStage.setTitle("Source Scoring");
 		Group root = new Group();
-		Scene scene = new Scene(root, 700, 250);
+		Scene scene = new Scene(root, 850, 400);
 		primaryStage.setScene(scene);
 
 		GridPane grid = new GridPane();
@@ -121,15 +121,21 @@ public class Main extends Application {
 				}
 			}
 		}
-		
+		startEnd =2;
+		if(lstValue.size()%4==0){
+			startEnd = startEnd +lstValue.size()/4+1;
+		}
+		if(lstValue.size()%4>0){
+			startEnd = startEnd +lstValue.size()/4+2;
+		}
 		// button
 		Button submit = new Button("Run");
 
-		GridPane.setConstraints(submit, 1, startEnd+1);
+		GridPane.setConstraints(submit, 1, startEnd);
 		grid.getChildren().add(submit);
 
 		Button clear = new Button("Cancel");
-		GridPane.setConstraints(clear, 2, startEnd+1);
+		GridPane.setConstraints(clear, 2, startEnd);
 		grid.getChildren().add(clear);
 
 		// log textArea
@@ -143,29 +149,21 @@ public class Main extends Application {
 		primaryStage.show();
 		SourceScoringTask task = new SourceScoringTask();
 		submit.setOnAction(event -> {
-			if(lstCheckBox.size()>0){
-				for(int k=0;k<lstCheckBox.size();k++){
-					CheckBox cb = lstCheckBox.get(k);
-					boolean b1= cb.selectedProperty().getValue();
-					System.out.println("name:"+cb.selectedProperty().getName() +"   selected:"+cb.selectedProperty().getValue());
-					System.out.println("cb.selectedProperty()=="+cb.selectedProperty());
-				}
-			}
-//			boolean b1= cb.selectedProperty().getValue();
-//			boolean b2= cb2.selectedProperty().getValue();
-//			boolean b3= cb3.selectedProperty().getValue();
-//			boolean b4= cb4.selectedProperty().getValue();
-			
-//			if(b1 || b2 || b3 || b4){
-				SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmss");
-				task.setUp(sourceFile.getText(),
-						outputFolder.getText() + "/" + sdf.format(new Date())
-								+ ".csv", logArea);
-				new Thread(task).start();
-//			}else{
-//				System.out.println("###############请选择需要匹配的规则");
-//				return;
+//			if(lstCheckBox.size()>0){
+//				for(int k=0;k<lstCheckBox.size();k++){
+//					CheckBox cb = lstCheckBox.get(k);
+//					boolean b1= cb.selectedProperty().getValue();
+//					if(cb.isSelected()){
+//						String checkBoxName = cb.getText();
+//					}
+//				}
 //			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmss");
+			task.setUp(sourceFile.getText(),
+					outputFolder.getText() + "/" + sdf.format(new Date())
+							+ ".csv", logArea);
+			new Thread(task).start();
 		});
 
 	}
