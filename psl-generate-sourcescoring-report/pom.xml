@@ -56,7 +56,7 @@
 					
 					                </systemProperties>
 					                <extraArguments>
-					
+									<extraArgument>-Djava.library.path=@BASEDIR@\lib</extraArgument>
 					                </extraArguments>
 					            </jvmSettings>
 					        </program>
