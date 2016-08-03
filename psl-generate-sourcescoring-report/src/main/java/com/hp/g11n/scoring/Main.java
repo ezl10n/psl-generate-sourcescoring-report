@@ -26,7 +26,7 @@ import com.hp.g11n.automation.passolo.tasks.SourceScoringTask;
 
 public class Main extends Application {
 	// the path of file
-	final String  FILE_PATCH = "C:\\readFiles\\magrn.txt";
+	static String  FILE_PATCH = "C:\\SourceScoring\\Category.txt";
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -148,21 +148,21 @@ public class Main extends Application {
 
 		primaryStage.show();
 		SourceScoringTask task = new SourceScoringTask();
+		List<String> lstSubTask = new ArrayList<String>();
 		submit.setOnAction(event -> {
-//			if(lstCheckBox.size()>0){
-//				for(int k=0;k<lstCheckBox.size();k++){
-//					CheckBox cb = lstCheckBox.get(k);
-//					boolean b1= cb.selectedProperty().getValue();
-//					if(cb.isSelected()){
-//						String checkBoxName = cb.getText();
-//					}
-//				}
-//			}
+			if(lstCheckBox.size()>0){
+				for(int k=0;k<lstCheckBox.size();k++){
+					CheckBox cb = lstCheckBox.get(k);
+					if(cb.isSelected()){
+						lstSubTask.add(cb.getText());
+					}
+				}
+			}
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmss");
 			task.setUp(sourceFile.getText(),
 					outputFolder.getText() + "/" + sdf.format(new Date())
-							+ ".csv", logArea);
+							+ ".csv", logArea,lstSubTask);
 			new Thread(task).start();
 		});
 
