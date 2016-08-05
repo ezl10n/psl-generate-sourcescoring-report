@@ -38,7 +38,6 @@ public class SourceScoringTask extends Task<Void> {
 
 	@Override
 	protected Void call() throws Exception {
-		int endnum = 50;
 		// output
 		FileWriter fw = new FileWriter(report);
 
@@ -49,17 +48,17 @@ public class SourceScoringTask extends Task<Void> {
 		DateTimeFormatCheckChain dateTimeFormatCheckChain = new DateTimeFormatCheckChain();
 		VariablesCheckChain variablesCheckChain = new VariablesCheckChain();
 		FileUtil fu = new FileUtil();
-		System.out.println("1111111111");
 		entries = (Set<Entry<String, String>>)fu.readExcelFile(FILE_PATCH).entrySet();
-		System.out.println("22222222222");
+		log.appendText("processing start.........");
 		outer: for (IPslSourceList sourceList : sourceLists.toList()) {
-			System.out.println("33333333333");
-			log.appendText("proccessing start.........");
 			//iterator this SourceString
 			for (IPslSourceString sourceString : sourceList.getSourceStrings()) {
 				//iterator the rule which from the UI checkBoxes
 				for(String doTask:lstSubTask){
-					for (Entry<String, String> entry : entries) {  
+					for (Entry<String, String> entry : entries) { 
+						if(entry.getKey().equals("ID")){
+							break;
+						}
 						if(entry.getKey().startsWith(doTask)){
 							if (sourceString == null 
 									|| sourceString.getText()==null 
@@ -68,37 +67,35 @@ public class SourceScoringTask extends Task<Void> {
 							}
 							String source = sourceString.getText().toLowerCase().trim();
 							for (String k : entry.getValue().split(",")) {
-								if(doTask.equals(Constant.CONCATENATION)){
+								if(entry.getKey().startsWith(Constant.CONCATENATION)){
 									if(concatenationCheckChain.check(source, k)){
-//										log.appendText("find one match key/value:"+ sourceString.getID() + " " + sourceString.getText() + "\n");
 										fw.write(sourceString.getID() + ","+ sourceString.getText() + "\n");
 									}
+									break;
 								}
-								if(doTask.equals(Constant.CAMELCASE)){
+								if(entry.getKey().startsWith(Constant.CAMELCASE)){
 									if(camelCaseCheckChain.check(source, k)){
-//										log.appendText("find one match key/value:"+ sourceString.getID() + " " + sourceString.getText() + "\n");
 										fw.write(sourceString.getID() + ","+ sourceString.getText() + "\n");
 									}
+									break;
 								}
-								if(doTask.equals(Constant.DATETIMEFORMAT)){
+								if(entry.getKey().startsWith(Constant.DATETIMEFORMAT)){
 									if(dateTimeFormatCheckChain.check(source, k)){
-//										log.appendText("find one match key/value:"+ sourceString.getID() + " " + sourceString.getText() + "\n");
 										fw.write(sourceString.getID() + ","+ sourceString.getText() + "\n");
 									}
+									break;
 								}
-								if(doTask.equals(Constant.VARIABLEST)){
+								if(entry.getKey().startsWith(Constant.VARIABLEST)){
 									if(variablesCheckChain.check(source, k)){
-//										log.appendText("find one match key/value:"+ sourceString.getID() + " " + sourceString.getText() + "\n");
 										fw.write(sourceString.getID() + ","+ sourceString.getText() + "\n");
 									}
+									break;
 								}
-								
 							}
 						}
 					}
 				}
 			}
-			break;
 		}
 
 		log.appendText("process source lists done...\n");

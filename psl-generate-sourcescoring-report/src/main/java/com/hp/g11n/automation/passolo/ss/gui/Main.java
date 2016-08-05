@@ -156,7 +156,10 @@ public class Main extends Application {
 					}
 				}
 			}
-			
+			if(lstSubTask.size()==0){
+				log.error("Please choose a checkBox at least");
+				return;
+			}
 			task.setUp(sourceFile.getText(),
 					outputFolder.getText() + "/"+sourceFileName+ ".csv", logArea,lstSubTask);
 			new Thread(task).start();

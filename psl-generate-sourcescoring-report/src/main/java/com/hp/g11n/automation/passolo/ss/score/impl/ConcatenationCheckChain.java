@@ -15,7 +15,11 @@ public class ConcatenationCheckChain implements IChain{
 	@Override
 	public boolean check(String source, String target) {
 		boolean result = false;
-		if (source.startsWith(target) || source.endsWith(target)) {
+		if (source.startsWith(target) 
+				|| source.endsWith(target)
+				|| (source.toLowerCase().equals(target.toLowerCase()) 
+						&& (source.substring(0,1).hashCode() -32 == source.substring(0,1).hashCode()))
+				|| source.contains(target)) {
 			result = true;
 		}
 		return result;

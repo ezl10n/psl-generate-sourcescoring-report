@@ -140,10 +140,13 @@ public class FileUtil{
 	}
 	
 	public static void  main(String[] args){
-		String  FILE_PATCH = "C:\\SourceScoring\\PatternConfig.xlsx";
-		FileUtil fu = new FileUtil();
-		for (Entry<String, String> entry : fu.readExcelFile(FILE_PATCH).entrySet()) {  
-			System.out.println(entry.getKey() +"---------"+entry.getValue());
-		}
+//		String  FILE_PATCH = "C:\\SourceScoring\\PatternConfig.xlsx";
+//		FileUtil fu = new FileUtil();
+//		for (Entry<String, String> entry : fu.readExcelFile(FILE_PATCH).entrySet()) {  
+//			System.out.println(entry.getKey() +"---------"+entry.getValue());
+//		}
+		String a1="abbb";
+		String a2="Abbb";
+		System.out.println(a2.substring(0, 1));
 	}
 }
