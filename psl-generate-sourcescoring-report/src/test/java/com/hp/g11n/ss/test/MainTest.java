@@ -1,8 +1,10 @@
-package com.hp.g11n.source.scoring;
+package com.hp.g11n.ss.test;
 
 
-import com.hp.g11n.scoring.Main;
+
 import org.junit.Test;
+
+import com.hp.g11n.automation.passolo.ss.gui.Main;
 
 public class MainTest {
     @Test

@@ -1,9 +1,7 @@
-package com.hp.g11n.scoring;
+package com.hp.g11n.automation.passolo.ss.gui;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javafx.application.Application;
@@ -21,12 +19,20 @@ import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
-import com.hp.g11n.automation.passolo.readfile.ReadFile;
-import com.hp.g11n.automation.passolo.tasks.SourceScoringTask;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.hp.g11n.automation.passolo.ss.score.task.SourceScoringTask;
+import com.hp.g11n.automation.passolo.ss.util.FileUtil;
 
 public class Main extends Application {
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	// the path of file
 	static String  FILE_PATCH = "C:\\SourceScoring\\Category.txt";
+	String sourceFileName ="";
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -52,37 +58,29 @@ public class Main extends Application {
 		DirectoryChooser chooser = new DirectoryChooser();
 
 		// source file
-		Label label1 = new Label("File to be processed:*:");
+		Label label1 = new Label("File to be processed:");
 		Button browser1 = new Button("Browse");
 
 		final TextField sourceFile = new TextField();
 		sourceFile.setText("c:/tmp/psl-generate-sorucescoring-report");
 		browser1.setOnAction((final ActionEvent e) -> {
-
-			File file = chooser.showDialog(primaryStage);
-			if (file != null) {
-				sourceFile.setText(file.getAbsolutePath());
+			JFileChooser jfc = new JFileChooser();
+			jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			jfc.showDialog(new JLabel(), "Choose");
+			File file = jfc.getSelectedFile();
+			sourceFile.setText(file.getAbsolutePath());
+			
+			if(!file.getName().endsWith(".lpu")){
+				log.error("This seleted file is not right file!");
+				return;
 			}
+			int index = file.getName().indexOf(".");
+			sourceFileName = file.getName().substring(0, index);
 		});
 		GridPane.setConstraints(label1, 0, 0);
 		GridPane.setConstraints(sourceFile, 1, 0);
 		GridPane.setConstraints(browser1, 2, 0);
 		grid.getChildren().addAll(label1, sourceFile, browser1);
-
-		// exclusion file path
-		Label label2 = new Label("Exclusion File Path:");
-		Button browser2 = new Button("Browse");
-		final TextField exclusionFile = new TextField();
-		browser2.setOnAction((final ActionEvent e) -> {
-			File file = chooser.showDialog(primaryStage);
-			if (file != null) {
-				exclusionFile.setText(file.getAbsolutePath());
-			}
-		});
-		GridPane.setConstraints(label2, 0, 1);
-		GridPane.setConstraints(exclusionFile, 1, 1);
-		GridPane.setConstraints(browser2, 2, 1);
-		grid.getChildren().addAll(label2, exclusionFile, browser2);
 
 		// output folder
 		Label label3 = new Label("Write Output to the folder:");
@@ -95,17 +93,17 @@ public class Main extends Application {
 				outputFolder.setText(file.getAbsolutePath());
 			}
 		});
-		GridPane.setConstraints(label3, 0, 2);
-		GridPane.setConstraints(outputFolder, 1, 2);
-		GridPane.setConstraints(browser3, 2, 2);
+		GridPane.setConstraints(label3, 0, 1);
+		GridPane.setConstraints(outputFolder, 1, 1);
+		GridPane.setConstraints(browser3, 2, 1);
 		grid.getChildren().addAll(label3, outputFolder, browser3);
 		
 		
 		//initialization check boxes
-		ReadFile rf = new ReadFile();
-		List<String> lstValue= rf.readTxtFile(FILE_PATCH);
+		FileUtil fu = new FileUtil();
+		List<String> lstValue= fu.readTxtFile(FILE_PATCH);
 		int forcount=0;
-		int startEnd =2;
+		int startEnd =1;
 		List<CheckBox> lstCheckBox = new ArrayList<CheckBox>();
 		if(lstValue != null && lstValue.size()>0){
 			for(int i =0;i<lstValue.size();i++){
@@ -159,10 +157,8 @@ public class Main extends Application {
 				}
 			}
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmss");
 			task.setUp(sourceFile.getText(),
-					outputFolder.getText() + "/" + sdf.format(new Date())
-							+ ".csv", logArea,lstSubTask);
+					outputFolder.getText() + "/"+sourceFileName+ ".csv", logArea,lstSubTask);
 			new Thread(task).start();
 		});
 
