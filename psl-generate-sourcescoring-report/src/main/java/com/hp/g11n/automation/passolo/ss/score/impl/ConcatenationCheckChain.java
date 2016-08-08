@@ -1,6 +1,12 @@
 package com.hp.g11n.automation.passolo.ss.score.impl;
 
+import com.google.common.base.Preconditions;
+import com.hp.g11n.automation.passolo.ss.pojo.ReportData;
 import com.hp.g11n.automation.passolo.ss.score.IChain;
+import com.hp.g11n.automation.passolo.ss.util.SourceScoringConfigUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -11,14 +17,30 @@ import com.hp.g11n.automation.passolo.ss.score.IChain;
  *
  */
 public class ConcatenationCheckChain implements IChain{
+private static final String KEY_WORDS="psl.psl-generate-sourcescoring-report.concatenation.key-words";
+	private List<String> keywords;
+	private final List<ReportData> report = new ArrayList<>();
+
+	public ConcatenationCheckChain(){
+		keywords = SourceScoringConfigUtil.getConfig().getStringList(KEY_WORDS);
+	}
 
 	@Override
-	public boolean check(String source, String target) {
-		boolean result = false;
-		if (source.startsWith(target) || source.endsWith(target)) {
-			result = true;
+	public boolean check(String key, String value) {
+		Preconditions.checkNotNull(keywords);
+		Preconditions.checkNotNull(value);
+		for(String v : keywords) {
+			if (value.startsWith(v) || value.endsWith(v)) {
+				report.add(new ReportData(key, value));
+				return true;
+			}
 		}
-		return result;
+		return false;
+	}
+
+	@Override
+	public List<ReportData> gatherReport() {
+		return report;
 	}
 
 }

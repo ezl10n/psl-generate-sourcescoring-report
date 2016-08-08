@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hp.g11n.automation.passolo.ss.util.SourceScoringConfigUtil;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -101,7 +102,7 @@ public class Main extends Application {
 		
 		//initialization check boxes
 		FileUtil fu = new FileUtil();
-		List<String> lstValue= fu.readTxtFile(FILE_PATCH);
+		List<String> lstValue= SourceScoringConfigUtil.checkBoxs();
 		int forcount=0;
 		int startEnd =1;
 		List<CheckBox> lstCheckBox = new ArrayList<CheckBox>();
@@ -158,7 +159,7 @@ public class Main extends Application {
 			}
 			
 			task.setUp(sourceFile.getText(),
-					outputFolder.getText() + "/"+sourceFileName+ ".csv", logArea,lstSubTask);
+					outputFolder.getText() + "/"+sourceFileName+ ".csv",lstSubTask);
 			new Thread(task).start();
 		});
 

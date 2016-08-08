@@ -35,5 +35,9 @@ public class SourceScoringConfigUtil {
         return checkboxNames;
     }
 
-
+    public static List<Class> chainClassList(){
+        List<Class> chains=new ArrayList<Class>();
+        REFLECTIONS.getSubTypesOf(IChain.class).stream().forEach( c -> chains.add(c));
+        return chains;
+    }
 }
