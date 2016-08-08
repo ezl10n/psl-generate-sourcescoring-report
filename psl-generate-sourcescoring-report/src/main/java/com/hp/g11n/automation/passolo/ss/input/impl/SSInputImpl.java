@@ -1,7 +1,6 @@
 package com.hp.g11n.automation.passolo.ss.input.impl;
 
 import com.hp.g11n.automation.passolo.ss.input.ISSInput;
-import com.hp.g11n.automation.passolo.ss.util.FileUtil;
 import com.hp.g11n.sdl.psl.interop.core.IPassoloApp;
 import com.hp.g11n.sdl.psl.interop.core.IPslProject;
 import com.hp.g11n.sdl.psl.interop.core.IPslSourceLists;
@@ -15,7 +14,7 @@ import com.hp.g11n.sdl.psl.interop.core.impl.impl.PassoloApp;
  * @Time: 上午9:41:13
  *
  */
-public class SSInputImpl extends FileUtil implements ISSInput {
+public class SSInputImpl implements ISSInput {
 
 	@Override
 	public IPslSourceLists getSourceLists(String path) {
