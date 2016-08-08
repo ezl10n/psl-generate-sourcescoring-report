@@ -22,5 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/maven-3.2.3/repository/com/oracle/javafx/1.7.0_51/javafx.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
