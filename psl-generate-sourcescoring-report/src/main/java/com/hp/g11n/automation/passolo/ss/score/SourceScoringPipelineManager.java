@@ -14,7 +14,8 @@ public class SourceScoringPipelineManager implements ISourceScoring{
     private final Logger log = LoggerFactory.getLogger(getClass());
     List<IChain> checkChains;
 
-    SourceScoringPipelineManager() {
+    public SourceScoringPipelineManager() {
+        checkChains = new ArrayList<>();
         List<Class> list = SourceScoringConfigUtil.chainClassList();
         for (Class c : list) {
             try {
@@ -30,6 +31,7 @@ public class SourceScoringPipelineManager implements ISourceScoring{
     @Override
     public String check(String key, String value) {
         Preconditions.checkNotNull(checkChains);
+        Preconditions.checkArgument(checkChains.size() > 0, "checkChains should not be empty");
         checkChains.forEach( c -> c.check(key,value));
         return "OK";
     }
@@ -38,6 +40,7 @@ public class SourceScoringPipelineManager implements ISourceScoring{
     public List<ReportData> report() {
         List<ReportData> result=new ArrayList<>();
         Preconditions.checkNotNull(checkChains);
+        Preconditions.checkArgument(checkChains.size() > 0, "checkChains should not be empty");
         checkChains.forEach(r -> result.addAll(r.gatherReport()));
         return result;
     }

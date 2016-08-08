@@ -42,10 +42,10 @@ public class SourceScoringTask extends Task<Void> {
 				//iterator the rule which from the UI checkBoxes
 				checkReport.check(sourceString.getID(),sourceString.getText());
 				endnum--;
-			}
-			//just process endnum sourceString.
-			if(endnum < 0 ){
-				break outer;
+				//just process endnum sourceString.
+				if(endnum < 0 ){
+					break outer;
+				}
 			}
 		}
 
