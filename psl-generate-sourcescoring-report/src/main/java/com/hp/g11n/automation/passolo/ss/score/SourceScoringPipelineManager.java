@@ -41,7 +41,12 @@ public class SourceScoringPipelineManager implements ISourceScoring{
         List<ReportData> result=new ArrayList<>();
         Preconditions.checkNotNull(checkChains);
         Preconditions.checkArgument(checkChains.size() > 0, "checkChains should not be empty");
-        checkChains.forEach(r -> result.addAll(r.gatherReport()));
+        checkChains.forEach(r -> {
+            List<ReportData> list = r.gatherReport();
+            if (list != null) {
+                result.addAll(list);
+            }
+        });
         return result;
     }
 }

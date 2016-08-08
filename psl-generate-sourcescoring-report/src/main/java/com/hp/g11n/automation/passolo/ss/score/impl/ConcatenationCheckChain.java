@@ -36,9 +36,9 @@ private static final String KEY_WORDS="psl.psl-generate-sourcescoring-report.con
 		if(log.isDebugEnabled()){
 			log.debug("Start ConcatenationCheckChain check key/value:"+key+"/"+value);
 		}
-		String tmpValue=value.toLowerCase().trim();
+
 		for(String v : keywords) {
-			if (tmpValue.startsWith(v) || tmpValue.endsWith(v)) {
+			if (value.startsWith(v) || value.endsWith(v)) {
 				report.add(new ReportData(key, value));
 				if(log.isDebugEnabled()){
 					log.debug("ConcatenationCheckChain, value:"+ value +" start or end with:+"+v);
