@@ -19,12 +19,12 @@ public class SourceScoringTask extends Task<Void> {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	private String source;
 	private String report;
-	private List<String>lstSubTask;
+	private List<Integer> rulesCheckedIdx;
 
-	public void setUp(String sourceDir, String reportDir,List<String>lstSubTask) {
+	public void setUp(String sourceDir, String reportDir,List<Integer> rulesCheckedIdx) {
 		this.source = sourceDir;
 		this.report = reportDir;
-		this.lstSubTask = lstSubTask;
+		this.rulesCheckedIdx = rulesCheckedIdx;
 	}
 
 	@Override
@@ -33,8 +33,12 @@ public class SourceScoringTask extends Task<Void> {
 		// output
 		final FileWriter fw = new FileWriter(report);
 
+		//init
+		ISourceScoring checkReport = (rulesCheckedIdx == null || rulesCheckedIdx.size() < 1) ?
+				ISourceScoring.getInstance():ISourceScoring.getInstance(rulesCheckedIdx);
+
 		IPslSourceLists sourceLists = FileUtil.getSourceLists(source);
-		ISourceScoring checkReport=ISourceScoring.getInstance();
+
 		outer:
 		for (IPslSourceList sourceList : sourceLists.toList()) {
 			//iterator this SourceString

@@ -11,4 +11,7 @@ public interface ISourceScoring {
     static ISourceScoring getInstance(){
         return new SourceScoringPipelineManager();
     }
+    static ISourceScoring getInstance(List<Integer> rulesIndex){
+        return new SourceScoringPipelineManager(rulesIndex);
+    }
 }

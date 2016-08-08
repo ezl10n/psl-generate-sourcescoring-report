@@ -16,6 +16,9 @@ public class SourceScoringPipelineManager implements ISourceScoring{
 
     public SourceScoringPipelineManager() {
         checkChains = new ArrayList<>();
+        if(log.isDebugEnabled()){
+            log.debug("init ALL source scoring check Chains.");
+        }
         List<Class> list = SourceScoringConfigUtil.chainClassList();
         for (Class c : list) {
             try {
@@ -26,6 +29,23 @@ public class SourceScoringPipelineManager implements ISourceScoring{
                 log.error("can't instance IChain:" + c, e);
             }
         }
+    }
+    public SourceScoringPipelineManager(List<Integer> rulesIndex){
+        List<Class> list = SourceScoringConfigUtil.chainClassList();
+        checkChains = new ArrayList<>();
+        if(log.isDebugEnabled()){
+            log.debug("init Selected source scoring check chains.");
+        }
+        rulesIndex.forEach( i -> {
+            Class c= list.get(i);
+            try {
+                checkChains.add(((IChain) c.newInstance()));
+            } catch (InstantiationException e) {
+                log.error("can't instance IChain:" + c, e);
+            } catch (IllegalAccessException e) {
+                log.error("can't instance IChain:" + c, e);
+            }
+        });
     }
 
     @Override

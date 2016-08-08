@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory;
 import com.hp.g11n.automation.passolo.ss.score.task.SourceScoringTask;
 import com.hp.g11n.automation.passolo.ss.util.FileUtil;
 
+//this class will be remove soon
+@Deprecated
 public class Main extends Application {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	// the path of file
@@ -162,7 +164,7 @@ public class Main extends Application {
 				return;
 			}
 			task.setUp(sourceFile.getText(),
-					outputFolder.getText() + "/"+sourceFileName+ ".csv",lstSubTask);
+					outputFolder.getText() + "/"+sourceFileName+ ".csv",null);
 			new Thread(task).start();
 		});
 

@@ -52,7 +52,7 @@
                                 <program>
                                     <id>sourceScoring-Standalone-GUI</id>
                                     <mainClass>
-                                            com.hp.g11n.scoring.Main
+                                        com.hp.g11n.automation.passolo.ss.Application
                                     </mainClass>
                                     <jvmSettings>
                                         <initialMemorySize>256m</initialMemorySize>
