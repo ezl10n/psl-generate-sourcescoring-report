@@ -3,6 +3,7 @@ package com.hp.g11n.automation.passolo.ss.util;
 import com.hp.g11n.automation.core.utils.ReflectUtils;
 import com.hp.g11n.automation.core.utils.TypeSafeConfigUtils;
 import com.hp.g11n.automation.passolo.ss.score.IChain;
+import com.hp.g11n.automation.passolo.ss.score.annotation.ChainData;
 import com.typesafe.config.Config;
 import org.reflections.Reflections;
 
@@ -10,9 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by foy on 2016-08-08.
- */
+
 public class SourceScoringConfigUtil {
     private static String CONFIG_DIR="D:/codes/HP/codes/ezl10n-ss/psl-generate-sourcescoring-report/psl-generate-sourcescoring-report/";
     private static String CONFIG_PATH= "/src/main/config/psl-generate-sourcescoring-report.conf";
@@ -20,6 +19,20 @@ public class SourceScoringConfigUtil {
     private static final Reflections REFLECTIONS = ReflectUtils.buildReflections(
             "com.hp.g11n.automation.passolo.ss.score.impl"
     );
+    private static List<String> checkboxNames;
+    private static List<Class> chains;
+
+    static{
+        checkboxNames=new ArrayList<String>();
+        REFLECTIONS.getTypesAnnotatedWith(ChainData.class).stream().sorted((a,b) ->
+                        Integer.compare(a.getAnnotation(ChainData.class).order(), b.getAnnotation(ChainData.class).order())
+        ).forEach(c -> checkboxNames.add(c.getAnnotation(ChainData.class).name()));
+
+        chains=new ArrayList<Class>();
+        REFLECTIONS.getTypesAnnotatedWith(ChainData.class).stream().sorted((a, b) ->
+                        Integer.compare(a.getAnnotation(ChainData.class).order(), b.getAnnotation(ChainData.class).order())
+        ).forEach(c -> chains.add(c.getAnnotation(ChainData.class).chainClass()));
+    }
 
     public static Config getConfig(){
         return config;
@@ -30,14 +43,10 @@ public class SourceScoringConfigUtil {
 
 
     public static List<String> checkBoxs(){
-        List<String> checkboxNames=new ArrayList<String>();
-       REFLECTIONS.getSubTypesOf(IChain.class).stream().forEach( c -> checkboxNames.add(c.getSimpleName()));
         return checkboxNames;
     }
 
     public static List<Class> chainClassList(){
-        List<Class> chains=new ArrayList<Class>();
-        REFLECTIONS.getSubTypesOf(IChain.class).stream().forEach( c -> chains.add(c));
         return chains;
     }
 }

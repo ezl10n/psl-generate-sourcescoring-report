@@ -3,6 +3,7 @@ package com.hp.g11n.automation.passolo.ss.score.impl;
 import com.google.common.base.Preconditions;
 import com.hp.g11n.automation.passolo.ss.pojo.ReportData;
 import com.hp.g11n.automation.passolo.ss.score.IChain;
+import com.hp.g11n.automation.passolo.ss.score.annotation.ChainData;
 import com.hp.g11n.automation.passolo.ss.util.SourceScoringConfigUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import java.util.List;
  * @Time: 上午10:19:16
  *
  */
+@ChainData(id="ConcatenationCheckChain",name="Concatenation",order=1,chainClass = ConcatenationCheckChain.class)
 public class ConcatenationCheckChain implements IChain{
 private static final String KEY_WORDS="psl.psl-generate-sourcescoring-report.concatenation.key-words";
 	private final Logger log = LoggerFactory.getLogger(getClass());
