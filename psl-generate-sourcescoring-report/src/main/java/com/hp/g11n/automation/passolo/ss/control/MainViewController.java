@@ -32,8 +32,6 @@ public class MainViewController implements Initializable {
 
     @FXML
     private TextField sourceUrl;
-    @FXML
-    private TextField exclusionPattern;
 
     @FXML
     private TextField outputUrl;
@@ -67,13 +65,6 @@ public class MainViewController implements Initializable {
         File file = fileChooser.showOpenDialog(root.getScene().getWindow());
         if (file != null) {
             sourceUrl.setText(file.getAbsolutePath());
-        }
-    }
-    @FXML
-    public void chooseExclusion(ActionEvent event){
-        File file = chooser.showDialog(root.getScene().getWindow());
-        if (file != null) {
-            exclusionPattern.setText(file.getAbsolutePath());
         }
     }
     @FXML
