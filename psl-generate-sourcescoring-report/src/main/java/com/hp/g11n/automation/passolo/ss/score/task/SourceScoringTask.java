@@ -35,13 +35,17 @@ public class SourceScoringTask extends Task<Void> {
 		ISourceScoring checkReport = (rulesCheckedIdx == null || rulesCheckedIdx.size() < 1) ?
 				ISourceScoring.getInstance():ISourceScoring.getInstance(rulesCheckedIdx);
 		PassoloTemplate.build(source).process((p,sourceLists) -> {
+			int progress=0;
 			for (IPslSourceList sourceList : sourceLists.toList()) {
 				//iterator this SourceString
 				for (IPslSourceString sourceString : sourceList.getSourceStrings()) {
 					//iterator the rule which from the UI checkBoxes
 					checkReport.check(sourceString.getID(),sourceString.getText());
 				}
+				progress++;
+				this.updateProgress(progress,sourceLists.getCount());
 			}
+
 		});
 
 		//report
