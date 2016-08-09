@@ -7,10 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
@@ -23,7 +26,7 @@ import java.util.ResourceBundle;
  */
 
 public class MainViewController implements Initializable {
-
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     @FXML
     private Parent root;
 
@@ -38,9 +41,13 @@ public class MainViewController implements Initializable {
     @FXML
     private HBox checkRules;
 
+    @FXML
+    private ProgressBar progressBar;
+
     private DirectoryChooser chooser;
 
     private FileChooser fileChooser;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -87,7 +94,10 @@ public class MainViewController implements Initializable {
             }
         }
         SourceScoringTask task = new SourceScoringTask();
-        task.setUp(sourceUrl.getText(),outputUrl.getText()+"/"+System.currentTimeMillis()+".csv",rules);
-        new Thread(task).start();
+        progressBar.progressProperty().bind(task.progressProperty());
+        task.setUp(sourceUrl.getText(), outputUrl.getText() + "/" + System.currentTimeMillis() + ".csv", rules);
+        Thread t =new Thread(task);
+        t.setDaemon(true);
+        t.start();
     }
 }
