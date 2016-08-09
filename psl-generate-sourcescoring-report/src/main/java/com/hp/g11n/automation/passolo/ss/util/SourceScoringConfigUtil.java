@@ -19,19 +19,17 @@ public class SourceScoringConfigUtil {
     private static final Reflections REFLECTIONS = ReflectUtils.buildReflections(
             "com.hp.g11n.automation.passolo.ss.score.impl"
     );
-    private static List<String> checkboxNames;
-    private static List<Class> chains;
+    private static List<String> checkboxNames= new ArrayList<>();
+    private static List<Class> chains= new ArrayList<>();
 
     static{
-        checkboxNames=new ArrayList<String>();
         REFLECTIONS.getTypesAnnotatedWith(ChainData.class).stream().sorted((a,b) ->
                         Integer.compare(a.getAnnotation(ChainData.class).order(), b.getAnnotation(ChainData.class).order())
-        ).forEach(c -> checkboxNames.add(c.getAnnotation(ChainData.class).name()));
-
-        chains=new ArrayList<Class>();
-        REFLECTIONS.getTypesAnnotatedWith(ChainData.class).stream().sorted((a, b) ->
-                        Integer.compare(a.getAnnotation(ChainData.class).order(), b.getAnnotation(ChainData.class).order())
-        ).forEach(c -> chains.add(c.getAnnotation(ChainData.class).chainClass()));
+        ).forEach(c -> {
+            ChainData data = c.getAnnotation(ChainData.class);
+            checkboxNames.add(data.name());
+            chains.add(data.chainClass());
+        });
     }
 
     public static Config getConfig(){
