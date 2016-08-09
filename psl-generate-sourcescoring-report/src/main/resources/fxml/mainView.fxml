@@ -8,31 +8,31 @@
    <children>
       <HBox layoutX="27.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="563.0">
          <children>
-            <Label prefHeight="14.0" prefWidth="147.0" text="File to be processed *: " />
-            <TextField fx:id="sourceUrl" prefHeight="22.0" prefWidth="333.0" text="c:/tmp/psl-generate-sorucescoring-report/RC_9.50_SW.lpu" />
+            <Label prefHeight="14.0" prefWidth="147.0" text="File to be processed: " />
+            <TextField fx:id="sourceUrl" prefHeight="22.0" prefWidth="333.0" text="" />
             <Button id="sourceBrowserBtn" mnemonicParsing="false" onAction="#chooseSource" text="Browser..." />
          </children>
       </HBox>
-      <HBox layoutX="27.0" layoutY="175.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="557.0">
+      <HBox layoutX="27.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="557.0">
          <children>
             <Label prefHeight="14.0" prefWidth="149.0" text="Write Output to the folder:" />
-            <TextField fx:id="outputUrl" prefHeight="22.0" prefWidth="334.0" text="c:/tmp/psl-generate-sorucescoring-report" />
+            <TextField fx:id="outputUrl" prefHeight="22.0" prefWidth="334.0" text="" />
             <Button id="descBrowserBtn" mnemonicParsing="false" onAction="#chooseOutput" text="Browser..." />
          </children>
       </HBox>
 
-      <HBox layoutX="109.0" layoutY="407.0" prefHeight="22.0" prefWidth="141.0">
+      <HBox layoutX="109.0" layoutY="180.0" prefHeight="22.0" prefWidth="141.0">
          <children>
             <Button id="runBtn" mnemonicParsing="false" onAction="#scoring" text="Run" />
          </children>
       </HBox>
-      <Button layoutX="341.0" layoutY="407.0" mnemonicParsing="false" text="Cancel" />
-      <HBox fx:id="checkRules" layoutX="11.0" layoutY="225.0" prefHeight="159.0" prefWidth="563.0">
+      <Button layoutX="341.0" layoutY="180.0" mnemonicParsing="false" text="Cancel" />
+      <HBox fx:id="checkRules" layoutX="11.0" layoutY="140.0" prefHeight="159.0" prefWidth="563.0">
          <children>
 
          </children>
       </HBox>
-      <ProgressBar fx:id="progressBar" layoutX="3.0" layoutY="447.0" prefHeight="17.0" prefWidth="594.0" progress="0.0" />
+      <ProgressBar fx:id="progressBar" layoutX="3.0" layoutY="220.0" prefHeight="17.0" prefWidth="594.0" progress="0.0" />
 
    </children>
 </Pane>

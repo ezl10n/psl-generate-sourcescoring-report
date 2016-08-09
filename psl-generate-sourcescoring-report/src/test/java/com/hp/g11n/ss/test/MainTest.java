@@ -10,8 +10,6 @@ public class MainTest {
     @Test
     public void testMainGUI(){
         String[] args={};
-        //old main
-        // Main.main(args);
         Application.main(args);
     }
 }

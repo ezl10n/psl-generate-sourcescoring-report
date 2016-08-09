@@ -5,7 +5,7 @@ import com.hp.g11n.automation.passolo.ss.score.IChain;
 import com.hp.g11n.automation.passolo.ss.score.annotation.ChainData;
 
 import java.util.List;
-@ChainData(id="VariablesCheckChain",name="TooManyVariables",order=4,chainClass = VariablesCheckChain.class)
+@ChainData(id="VariablesCheckChain",name="Variables",order=4,chainClass = VariablesCheckChain.class)
 public class VariablesCheckChain implements IChain{
 
 	@Override
