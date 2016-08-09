@@ -1,33 +1,24 @@
 package com.hp.g11n.automation.passolo.ss.gui;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.hp.g11n.automation.passolo.ss.score.task.SourceScoringTask;
 import com.hp.g11n.automation.passolo.ss.util.SourceScoringConfigUtil;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hp.g11n.automation.passolo.ss.score.task.SourceScoringTask;
-import com.hp.g11n.automation.passolo.ss.util.FileUtil;
+import javax.swing.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 //this class will be remove soon
 @Deprecated
@@ -103,7 +94,6 @@ public class Main extends Application {
 		
 		
 		//initialization check boxes
-		FileUtil fu = new FileUtil();
 		List<String> lstValue= SourceScoringConfigUtil.checkBoxs();
 		int forcount=0;
 		int startEnd =1;
