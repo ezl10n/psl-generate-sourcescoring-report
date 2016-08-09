@@ -2,10 +2,9 @@ package com.hp.g11n.ss.test;
 
 
 
-import com.hp.g11n.automation.passolo.ss.Application;
 import org.junit.Test;
 
-import com.hp.g11n.automation.passolo.ss.gui.Main;
+import com.hp.g11n.automation.passolo.ss.Application;
 
 public class MainTest {
     @Test
