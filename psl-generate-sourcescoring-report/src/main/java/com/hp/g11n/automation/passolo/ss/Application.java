@@ -49,7 +49,7 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Source Scoring !!");
+        stage.setTitle("Source Scoring");
         stage.setScene(new Scene(getMainView()));
         stage.setResizable(true);
         stage.centerOnScreen();

@@ -1,12 +1,13 @@
 package com.hp.g11n.automation.passolo.ss.score.impl;
 
 import com.hp.g11n.automation.passolo.ss.pojo.ReportData;
-import com.hp.g11n.automation.passolo.ss.score.IChain;
-import com.hp.g11n.automation.passolo.ss.score.annotation.ChainData;
+import com.hp.g11n.automation.passolo.ss.score.IRule;
+import com.hp.g11n.automation.passolo.ss.score.annotation.RuleData;
+import com.hp.g11n.automation.passolo.ss.util.Constant;
 
 import java.util.List;
-@ChainData(id="VariablesCheckChain",name="Variables",order=4,chainClass = VariablesCheckChain.class)
-public class VariablesCheckChain implements IChain{
+@RuleData(id="VariablesCheckRule",name=Constant.VARIABLES,order=4,ruleClass = VariablesCheckRule.class)
+public class VariablesCheckRule implements IRule{
 
 	@Override
 	public boolean check(String source, String target) {

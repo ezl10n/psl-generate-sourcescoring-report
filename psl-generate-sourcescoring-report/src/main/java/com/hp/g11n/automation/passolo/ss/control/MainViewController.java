@@ -1,7 +1,11 @@
 package com.hp.g11n.automation.passolo.ss.control;
 
-import com.hp.g11n.automation.passolo.ss.score.task.SourceScoringTask;
-import com.hp.g11n.automation.passolo.ss.util.SourceScoringConfigUtil;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,14 +16,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import com.hp.g11n.automation.passolo.ss.score.task.SourceScoringTask;
+import com.hp.g11n.automation.passolo.ss.util.SourceScoringConfigUtil;
 
 /**
  * Created by foy on 2016-08-05.
@@ -86,9 +88,16 @@ public class MainViewController implements Initializable {
         }
         SourceScoringTask task = new SourceScoringTask();
         progressBar.progressProperty().bind(task.progressProperty());
-        task.setUp(sourceUrl.getText(), outputUrl.getText() + "/" + System.currentTimeMillis() + ".csv", rules);
+        task.setUp(sourceUrl.getText(), outputUrl.getText() + "/" + getFileName(sourceUrl.getText()) + ".csv", rules);
         Thread t =new Thread(task);
         t.setDaemon(true);
         t.start();
+    }
+    
+    public String getFileName(String filePath){
+    	File file = new File(filePath);
+    	String name = file.getName();
+    	int index = name.lastIndexOf(".");
+    	return name.substring(0,index);
     }
 }

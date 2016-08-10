@@ -12,56 +12,56 @@ import java.util.List;
 
 public class SourceScoringPipelineManager implements ISourceScoring{
     private final Logger log = LoggerFactory.getLogger(getClass());
-    List<IChain> checkChains;
+    List<IRule> checkRules;
 
     public SourceScoringPipelineManager() {
-        checkChains = new ArrayList<>();
+    	checkRules = new ArrayList<>();
         if(log.isDebugEnabled()){
-            log.debug("init ALL source scoring check Chains.");
+            log.debug("init ALL source scoring check Rules.");
         }
-        List<Class> list = SourceScoringConfigUtil.chainClassList();
+        List<Class> list = SourceScoringConfigUtil.ruleClassList();
         for (Class c : list) {
             try {
-                checkChains.add(((IChain) c.newInstance()));
+            	checkRules.add(((IRule) c.newInstance()));
             } catch (InstantiationException e) {
-                log.error("can't instance IChain:" + c, e);
+                log.error("can't instance IRule:" + c, e);
             } catch (IllegalAccessException e) {
-                log.error("can't instance IChain:" + c, e);
+                log.error("can't instance IRule:" + c, e);
             }
         }
     }
     public SourceScoringPipelineManager(List<Integer> rulesIndex){
-        List<Class> list = SourceScoringConfigUtil.chainClassList();
-        checkChains = new ArrayList<>();
+        List<Class> list = SourceScoringConfigUtil.ruleClassList();
+        checkRules = new ArrayList<>();
         if(log.isDebugEnabled()){
-            log.debug("init Selected source scoring check chains.");
+            log.debug("init Selected source scoring check rules.");
         }
         rulesIndex.forEach( i -> {
             Class c= list.get(i);
             try {
-                checkChains.add(((IChain) c.newInstance()));
+            	checkRules.add(((IRule) c.newInstance()));
             } catch (InstantiationException e) {
-                log.error("can't instance IChain:" + c, e);
+                log.error("can't instance IRule:" + c, e);
             } catch (IllegalAccessException e) {
-                log.error("can't instance IChain:" + c, e);
+                log.error("can't instance IRule:" + c, e);
             }
         });
     }
 
     @Override
     public String check(String key, String value) {
-        Preconditions.checkNotNull(checkChains);
-        Preconditions.checkArgument(checkChains.size() > 0, "checkChains should not be empty");
-        checkChains.forEach( c -> c.check(key,value));
+        Preconditions.checkNotNull(checkRules);
+        Preconditions.checkArgument(checkRules.size() > 0, "checkRules should not be empty");
+        checkRules.forEach( c -> c.check(key,value));
         return "OK";
     }
 
     @Override
     public List<ReportData> report() {
         List<ReportData> result=new ArrayList<>();
-        Preconditions.checkNotNull(checkChains);
-        Preconditions.checkArgument(checkChains.size() > 0, "checkChains should not be empty");
-        checkChains.forEach(r -> {
+        Preconditions.checkNotNull(checkRules);
+        Preconditions.checkArgument(checkRules.size() > 0, "checkRules should not be empty");
+        checkRules.forEach(r -> {
             List<ReportData> list = r.gatherReport();
             if (list != null) {
                 result.addAll(list);

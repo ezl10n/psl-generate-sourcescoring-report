@@ -1,12 +1,13 @@
 package com.hp.g11n.automation.passolo.ss.score.impl;
 
 import com.hp.g11n.automation.passolo.ss.pojo.ReportData;
-import com.hp.g11n.automation.passolo.ss.score.IChain;
-import com.hp.g11n.automation.passolo.ss.score.annotation.ChainData;
+import com.hp.g11n.automation.passolo.ss.score.IRule;
+import com.hp.g11n.automation.passolo.ss.score.annotation.RuleData;
+import com.hp.g11n.automation.passolo.ss.util.Constant;
 
 import java.util.List;
-@ChainData(id="DateTimeFormatCheckChain",name="Date&Time Format",order=3,chainClass = DateTimeFormatCheckChain.class)
-public class DateTimeFormatCheckChain implements IChain{
+@RuleData(id="CamelCaseCheckRule",name=Constant.CAMELCASE,order=2,ruleClass = CamelCaseCheckRule.class)
+public class CamelCaseCheckRule implements IRule{
 
 	@Override
 	public boolean check(String source, String target) {

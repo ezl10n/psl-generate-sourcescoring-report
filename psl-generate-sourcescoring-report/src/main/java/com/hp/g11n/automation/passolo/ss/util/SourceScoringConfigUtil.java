@@ -8,30 +8,30 @@ import org.reflections.Reflections;
 
 import com.hp.g11n.automation.core.utils.ReflectUtils;
 import com.hp.g11n.automation.core.utils.TypeSafeConfigUtils;
-import com.hp.g11n.automation.passolo.ss.score.annotation.ChainData;
+import com.hp.g11n.automation.passolo.ss.score.annotation.RuleData;
 import com.typesafe.config.Config;
 
 public class SourceScoringConfigUtil {
-	private static String CONFIG_DIR = "D:/HPGit/psl-generate-sourcescoring-report/psl-generate-sourcescoring-report/";
+	private static String CONFIG_DIR = "D:/HPGit/psl-generate-sourcescoring-report/";
 	private static String CONFIG_PATH = "/src/main/config/psl-generate-sourcescoring-report.conf";
 	static Config config = TypeSafeConfigUtils.parse(Paths.get(CONFIG_DIR,
 			CONFIG_PATH));
 	private static final Reflections REFLECTIONS = ReflectUtils
 			.buildReflections("com.hp.g11n.automation.passolo.ss.score.impl");
 	private static List<String> checkboxNames = new ArrayList<>();
-	private static List<Class> chains = new ArrayList<>();
+	private static List<Class> rules = new ArrayList<>();
 
 	static {
 		REFLECTIONS
-				.getTypesAnnotatedWith(ChainData.class)
+				.getTypesAnnotatedWith(RuleData.class)
 				.stream()
 				.sorted((a, b) -> Integer.compare(
-						a.getAnnotation(ChainData.class).order(), b
-								.getAnnotation(ChainData.class).order()))
+						a.getAnnotation(RuleData.class).order(), b
+								.getAnnotation(RuleData.class).order()))
 				.forEach(c -> {
-					ChainData data = c.getAnnotation(ChainData.class);
+					RuleData data = c.getAnnotation(RuleData.class);
 					checkboxNames.add(data.name());
-					chains.add(data.chainClass());
+					rules.add(data.ruleClass());
 				});
 	}
 
@@ -47,7 +47,7 @@ public class SourceScoringConfigUtil {
 		return checkboxNames;
 	}
 
-	public static List<Class> chainClassList() {
-		return chains;
+	public static List<Class> ruleClassList() {
+		return rules;
 	}
 }
